@@ -1,30 +1,31 @@
 {
   "schemaVersion": 1,
-  "id": "mod_id",
+  "id": "ender_pair",
   "version": "${version}",
-  "name": "Mod Name",
-  "description": "Mod Description",
+  "name": "Ender Pair",
+  "description": "Craft paired ender chests",
   "authors": [
-    "Author"
+    "Casey Borders",
+    "Corey Borders"
   ],
   "contact": {
     "homepage": "https://example.com/",
     "issues": "https://example.com/",
     "sources": "https://example.com/"
   },
-  "license": "GNU Lesser General Public License version 3 (LGPLv3)",
-  "icon": "assets/mod_name/icon.png",
+  "license": "MIT License",
+  "icon": "assets/ender_pair/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
       {
         "adapter": "kotlin",
-        "value": "com.mod_author.mod_id.ModName"
+        "value": "productions.moo.minecraft.enderpair.EnderPair"
       }
     ]
   },
   "mixins": [
-    "mod_id.mixins.json"
+    "ender_pair.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.11.7",
