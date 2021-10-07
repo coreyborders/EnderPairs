@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "productions.moo.minecraft.enderpairs.mixins",
+  "package": "productions.moo.minecraft.enderpair.mixins",
   "compatibilityLevel": "JAVA_16",
   "injectors": {
     "defaultRequire": 1
