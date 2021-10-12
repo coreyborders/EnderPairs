@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "ender_pair:block/paired_chest" }
+  }
+}
