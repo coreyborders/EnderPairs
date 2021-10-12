@@ -12,7 +12,7 @@ import net.minecraft.util.registry.Registry
 @Suppress("UNUSED")
 object EnderPair : ModInitializer {
     private const val MOD_ID = "ender_pair"
-    val PAIRED_CHEST_BLOCK = PairedChestBlock(FabricBlockSettings.of(Material.METAL).strength(4.0f).requiresTool())
+    val PAIRED_CHEST_BLOCK = PairedChestBlock(FabricBlockSettings.of(Material.METAL).strength(4.0f))
     val PAIRED_CHEST_ITEM = PairedChestItem(PAIRED_CHEST_BLOCK, FabricItemSettings().group(ItemGroup.MISC))
 
     override fun onInitialize() {
