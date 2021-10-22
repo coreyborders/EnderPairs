@@ -10,10 +10,8 @@ import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventory
-import net.minecraft.item.ItemStack
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
-import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -64,6 +62,7 @@ class PairedChestBlock(settings: FabricBlockSettings) : BlockWithEntity(settings
                 println("The first slot holds ${blockEntity.getStack(0)} and the second slot holds ${blockEntity.getStack(1)}")
             }
         }
+
         return ActionResult.SUCCESS
     }
 }
