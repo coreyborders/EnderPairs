@@ -61,8 +61,15 @@ class PairedChestBlock(settings: FabricBlockSettings) : BlockWithEntity(settings
             } else {
                 println("The first slot holds ${blockEntity.getStack(0)} and the second slot holds ${blockEntity.getStack(1)}")
             }
+        } else {
+            if(!blockEntity.getStack(1).isEmpty) {
+                player.inventory.offerOrDrop(blockEntity.getStack(1))
+                blockEntity.removeStack(1)
+            } else if(!blockEntity.getStack(0).isEmpty) {
+                player.inventory.offerOrDrop(blockEntity.getStack(0))
+                blockEntity.removeStack(0)
+            }
         }
-
         return ActionResult.SUCCESS
     }
 }

@@ -17,9 +17,6 @@
   "icon": "assets/ender_pair/icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": [{
-      "value": "productions.moo.minecraft.enderpair.EnderPairClient"
-    }],
     "main": [
       {
         "adapter": "kotlin",

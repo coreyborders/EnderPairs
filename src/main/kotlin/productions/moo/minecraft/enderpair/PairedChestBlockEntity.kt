@@ -16,9 +16,7 @@ import java.util.*
 private const val UUID_KEY = "UUID"
 
 class PairedChestBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(EnderPair.PAIRED_CHEST_BLOCK_ENTITY, pos, state), ImplementedInventory {
-    override val items: DefaultedList<ItemStack?>
-        get() = DefaultedList.ofSize(2, ItemStack.EMPTY)
-
+    override val items: DefaultedList<ItemStack?> = DefaultedList.ofSize(2, ItemStack.EMPTY)
 
     private var _id = UUID.randomUUID()
     var id: String
