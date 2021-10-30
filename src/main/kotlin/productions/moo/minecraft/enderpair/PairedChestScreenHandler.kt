@@ -1,16 +1,14 @@
 package productions.moo.minecraft.enderpair
 
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
+import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.slot.Slot
 
-class PairedChestScreenHandler(syncId: Int, playerInventory: PlayerInventory, inventory: Inventory) : ScreenHandler(
-    null, syncId
-) {
+class PairedChestScreenHandler(syncId: Int, playerInventory: PlayerInventory, inventory: Inventory = SimpleInventory(PairedChestBlockEntity.INVENTORY_SIZE)) : ScreenHandler(EnderPair.PAIRED_CHEST_SCREEN_HANDLER, syncId) {
     private lateinit var inventory: Inventory
     init {
         this.inventory = inventory

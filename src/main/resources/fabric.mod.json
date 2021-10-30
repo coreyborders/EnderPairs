@@ -22,6 +22,9 @@
         "adapter": "kotlin",
         "value": "productions.moo.minecraft.enderpair.EnderPair"
       }
+    ],
+    "client": [
+      "productions.moo.minecraft.enderpair.EnderPairClient"
     ]
   },
   "mixins": [

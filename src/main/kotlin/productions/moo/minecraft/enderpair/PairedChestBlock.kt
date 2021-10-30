@@ -13,8 +13,10 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.network.PacketByteBuf
+import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
+import net.minecraft.util.ItemScatterer
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -33,38 +35,46 @@ class PairedChestBlock(settings: FabricBlockSettings) : BlockWithEntity(settings
         return BlockRenderType.MODEL
     }
 
-    override fun <T : BlockEntity> getTicker(
-        world: World,
-        blockState: BlockState,
-        type: BlockEntityType<T>
-    ): BlockEntityTicker<T>? {
-        return checkType(type, EnderPair.PAIRED_CHEST_BLOCK_ENTITY) { world1, blockPos, blockState1, blockEntity ->
-            PairedChestBlockEntity.tick(world1, blockPos, blockState1, blockEntity)
-        }
-    }
-
     override fun onUse(
-        state: BlockState?,
-        world: World?,
-        pos: BlockPos?,
-        player: PlayerEntity?,
-        hand: Hand?,
-        hit: BlockHitResult?
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        player: PlayerEntity,
+        hand: Hand,
+        hit: BlockHitResult
     ): ActionResult {
-        if (!world!!.isClient) {
-            val blockEntity = world.getBlockEntity(pos)
-            if (blockEntity is PairedChestBlockEntity) {
-                ContainerProviderImpl.INSTANCE.openContainer(
-                   EnderPair.PAIRED_CHEST_IDENTIFIER,
-                    player
-                ) { buf: PacketByteBuf -> buf.writeBlockPos(pos) }
+        if (!world.isClient) {
+            val screenHandlerFactory = state.createScreenHandlerFactory(world, pos)
+            if(screenHandlerFactory != null) {
+                player.openHandledScreen(screenHandlerFactory)
             }
         }
         return ActionResult.SUCCESS
     }
 
+    override fun onStateReplaced(
+        state: BlockState?,
+        world: World?,
+        pos: BlockPos?,
+        newState: BlockState?,
+        moved: Boolean
+    ) {
+        if(state?.block != newState?.block) {
+            val blockEntity = world?.getBlockEntity(pos)
+            if(blockEntity is PairedChestBlockEntity) {
+                ItemScatterer.spawn(world, pos, blockEntity)
+                world.updateComparators(pos, this)
+            }
+            super.onStateReplaced(state, world, pos, newState, moved)
+        }
+    }
+
     override fun hasComparatorOutput(state: BlockState?): Boolean {
-        return false
+        return true
+    }
+
+    override fun getComparatorOutput(state: BlockState?, world: World?, pos: BlockPos?): Int {
+        return ScreenHandler.calculateComparatorOutput(world?.getBlockEntity(pos))
     }
 
     override fun onPlaced(
