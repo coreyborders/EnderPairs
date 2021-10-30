@@ -1,15 +1,6 @@
-import net.minecraft.entity.player.PlayerEntity
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.minecraft.item.BlockItem
-import net.minecraft.item.ItemStack
-import net.minecraft.sound.SoundEvents
-import net.minecraft.util.Hand
-import net.minecraft.util.TypedActionResult
-import net.minecraft.world.World
-import productions.moo.minecraft.enderpair.PairedChestBlock
+import net.minecraft.item.ItemGroup
+import productions.moo.minecraft.enderpair.EnderPair
 
-class PairedChestItem(chestBlock: PairedChestBlock, settings: Settings): BlockItem(chestBlock, settings) {
-    override fun use(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
-        player.playSound(SoundEvents.BLOCK_WOOL_BREAK, 1.0f, 1.0f)
-        return super.use(world, player, hand)
-    }
-}
+class PairedChestItem: BlockItem(EnderPair.PAIRED_CHEST_BLOCK, FabricItemSettings().group(ItemGroup.MISC))
