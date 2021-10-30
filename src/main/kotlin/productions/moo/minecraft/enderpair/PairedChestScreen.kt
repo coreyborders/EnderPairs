@@ -17,7 +17,7 @@ class PairedChestScreen(
 ) : HandledScreen<PairedChestScreenHandler>(handler, playerInventory, title) {
 
     companion object {
-        private val TEXTURE = Identifier(MOD_ID, "resources/assets/ender_pair/textures/block/paired_chest.png")
+        private val TEXTURE = Identifier("textures/gui/container/shulker_box.png")
     }
 
     init {
