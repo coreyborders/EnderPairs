@@ -2,21 +2,25 @@ package productions.moo.minecraft.enderpair
 
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
+import net.fabricmc.fabric.impl.container.ContainerProviderImpl
 import net.minecraft.block.BlockRenderType
 import net.minecraft.block.BlockState
 import net.minecraft.block.BlockWithEntity
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.inventory.Inventory
+import net.minecraft.item.ItemStack
+import net.minecraft.network.PacketByteBuf
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-class PairedChestBlock(settings: FabricBlockSettings) : BlockWithEntity(settings), FabricBlockEntityTypeBuilder.Factory<PairedChestBlockEntity> {
+class PairedChestBlock(settings: FabricBlockSettings) : BlockWithEntity(settings),
+    FabricBlockEntityTypeBuilder.Factory<PairedChestBlockEntity> {
     override fun create(blockPos: BlockPos, blockState: BlockState): PairedChestBlockEntity {
         return createBlockEntity(blockPos, blockState)
     }
@@ -47,29 +51,34 @@ class PairedChestBlock(settings: FabricBlockSettings) : BlockWithEntity(settings
         hand: Hand?,
         hit: BlockHitResult?
     ): ActionResult {
-        if (world != null) {
-            if(world.isClient) return ActionResult.SUCCESS
-        }
-        val blockEntity = world?.getBlockEntity(pos) as Inventory
-        if(!player?.getStackInHand(hand)?.isEmpty!!) {
-            if(blockEntity.getStack(0).isEmpty) {
-                blockEntity.setStack(0, player.getStackInHand(hand).copy())
-                player.getStackInHand(hand).count = 0
-            } else if(blockEntity.getStack(1).isEmpty) {
-                blockEntity.setStack(1, player.getStackInHand(hand).copy())
-                player.getStackInHand(hand).count = 0
-            } else {
-                println("The first slot holds ${blockEntity.getStack(0)} and the second slot holds ${blockEntity.getStack(1)}")
-            }
-        } else {
-            if(!blockEntity.getStack(1).isEmpty) {
-                player.inventory.offerOrDrop(blockEntity.getStack(1))
-                blockEntity.removeStack(1)
-            } else if(!blockEntity.getStack(0).isEmpty) {
-                player.inventory.offerOrDrop(blockEntity.getStack(0))
-                blockEntity.removeStack(0)
+        if (!world!!.isClient) {
+            val blockEntity = world.getBlockEntity(pos)
+            if (blockEntity is PairedChestBlockEntity) {
+                ContainerProviderImpl.INSTANCE.openContainer(
+                   EnderPair.PAIRED_CHEST_IDENTIFIER,
+                    player
+                ) { buf: PacketByteBuf -> buf.writeBlockPos(pos) }
             }
         }
         return ActionResult.SUCCESS
+    }
+
+    override fun hasComparatorOutput(state: BlockState?): Boolean {
+        return false
+    }
+
+    override fun onPlaced(
+        world: World?,
+        pos: BlockPos?,
+        state: BlockState?,
+        placer: LivingEntity?,
+        itemStack: ItemStack?
+    ) {
+        if (itemStack!!.hasCustomName()) {
+            val blockEntity = world!!.getBlockEntity(pos)
+            if (blockEntity is PairedChestBlockEntity) {
+                (blockEntity as PairedChestBlockEntity).customName = itemStack.name
+            }
+        }
     }
 }
