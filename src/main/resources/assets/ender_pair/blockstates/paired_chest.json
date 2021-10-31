@@ -1,5 +1,8 @@
 {
   "variants": {
-    "": { "model": "ender_pair:block/paired_chest" }
+    "facing=north": { "model": "ender_pair:block/paired_chest", "uvlock": true },
+    "facing=east":  { "model": "ender_pair:block/paired_chest", "y":  90, "uvlock": true },
+    "facing=south": { "model": "ender_pair:block/paired_chest", "y": 180, "uvlock": true },
+    "facing=west":  { "model": "ender_pair:block/paired_chest", "y": 270, "uvlock": true }
   }
 }
