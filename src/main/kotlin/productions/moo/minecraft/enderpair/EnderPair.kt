@@ -20,7 +20,7 @@ object EnderPair : ModInitializer {
     const val INVENTORY_HEIGHT = 3
     const val INVENTORY_SIZE = INVENTORY_WIDTH * INVENTORY_HEIGHT
 
-    private const val MOD_ID = "ender_pair"
+    const val MOD_ID = "ender_pair"
     val PAIRED_CHEST_BLOCK = PairedChestBlock(FabricBlockSettings.copyOf(Blocks.ENDER_CHEST))
     val PAIRED_CHEST_ITEM = BlockItem(PAIRED_CHEST_BLOCK, FabricItemSettings().group(ItemGroup.MISC))
     val PAIRED_CHEST_TYPE = FabricBlockEntityTypeBuilder.create(
