@@ -14,8 +14,6 @@ group = mavenGroup
 minecraft {}
 repositories {}
 dependencies {
-    implementation("junit:junit:4.13.1")
-    implementation("junit:junit:4.13.1")
     val minecraftVersion: String by project
     minecraft("com.mojang:minecraft:$minecraftVersion")
     val yarnMappings: String by project
