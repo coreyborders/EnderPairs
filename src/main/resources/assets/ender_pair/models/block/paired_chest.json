@@ -1,6 +1,7 @@
 {
-  "parent": "block/cube_all",
+  "parent": "ender_pair:block/chest_template",
   "textures": {
-    "all": "ender_pair:block/paired_chest"
+    "0": "ender_pair:block/paired_chest",
+    "particle": "block/obsidian"
   }
 }
