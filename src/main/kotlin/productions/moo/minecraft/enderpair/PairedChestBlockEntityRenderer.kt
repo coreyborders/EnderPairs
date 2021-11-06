@@ -101,6 +101,4 @@ class PairedChestBlockEntityRenderer(context: BlockEntityRendererFactory.Context
         lock.render(matrices, vertices, light, overlay)
         bottom.render(matrices, vertices, light, overlay)
     }
-
-
 }
