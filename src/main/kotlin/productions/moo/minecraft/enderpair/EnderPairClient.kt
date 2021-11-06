@@ -16,9 +16,13 @@ class EnderPairClient : ClientModInitializer {
             GenericContainerScreen(handler, playerInventory, title)
         }
 
-        BlockEntityRendererRegistry.register(EnderPair.PAIRED_CHEST_TYPE) { context -> PairedChestBlockEntityRenderer(context) }
-        ClientSpriteRegistryCallback.event(TexturedRenderLayers.CHEST_ATLAS_TEXTURE).register {
-            _, registry -> registry.register(PairedChestBlockEntityRenderer.PAIRED_CHEST_TEXTURE)
+        BlockEntityRendererRegistry.register(EnderPair.PAIRED_CHEST_TYPE) { context ->
+            PairedChestBlockEntityRenderer(
+                context
+            )
+        }
+        ClientSpriteRegistryCallback.event(TexturedRenderLayers.CHEST_ATLAS_TEXTURE).register { _, registry ->
+            registry.register(PairedChestBlockEntityRenderer.PAIRED_CHEST_TEXTURE)
         }
     }
 }

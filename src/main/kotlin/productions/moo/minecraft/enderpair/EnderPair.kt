@@ -3,13 +3,10 @@ package productions.moo.minecraft.enderpair
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry
 import net.minecraft.block.Blocks
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.SimpleInventory
-import net.minecraft.item.BlockItem
-import net.minecraft.item.ItemGroup
 import net.minecraft.screen.GenericContainerScreenHandler
 import net.minecraft.screen.ScreenHandlerType
 import net.minecraft.util.Identifier
@@ -22,7 +19,7 @@ object EnderPair : ModInitializer {
 
     const val MOD_ID = "ender_pair"
     val PAIRED_CHEST_BLOCK = PairedChestBlock(FabricBlockSettings.copyOf(Blocks.ENDER_CHEST))
-    val PAIRED_CHEST_ITEM = BlockItem(PAIRED_CHEST_BLOCK, FabricItemSettings().group(ItemGroup.MISC))
+    val PAIRED_CHEST_ITEM = PairedChestItem()
     val PAIRED_CHEST_TYPE = FabricBlockEntityTypeBuilder.create(
         { blockPos, blockState -> PairedChestBlockEntity(blockPos, blockState) },
         PAIRED_CHEST_BLOCK

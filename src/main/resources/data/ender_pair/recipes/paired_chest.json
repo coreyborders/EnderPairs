@@ -1,0 +1,22 @@
+
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "chest",
+  "pattern": [
+    "   ",
+    "EPE",
+    "   "
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:ender_chest"
+    },
+    "P": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "result": {
+    "item": "ender_pair:paired_chest",
+    "count": 2
+  }
+}
