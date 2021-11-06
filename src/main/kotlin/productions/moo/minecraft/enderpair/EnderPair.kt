@@ -18,6 +18,7 @@ object EnderPair : ModInitializer {
     const val INVENTORY_SIZE = INVENTORY_WIDTH * INVENTORY_HEIGHT
 
     const val MOD_ID = "ender_pair"
+    const val PAIRED_CHEST = "paired_chest"
     val PAIRED_CHEST_BLOCK = PairedChestBlock(FabricBlockSettings.copyOf(Blocks.ENDER_CHEST))
     val PAIRED_CHEST_ITEM = PairedChestItem()
     val PAIRED_CHEST_TYPE = FabricBlockEntityTypeBuilder.create(
@@ -26,7 +27,7 @@ object EnderPair : ModInitializer {
     ).build(null)
     lateinit var PAIRED_CHEST_SCREEN_HANDLER: ScreenHandlerType<GenericContainerScreenHandler>
 
-    val PAIRED_CHEST_IDENTIFIER: Identifier = Identifier(MOD_ID, "paired_chest")
+    val PAIRED_CHEST_IDENTIFIER: Identifier = Identifier(MOD_ID, PAIRED_CHEST)
 
     override fun onInitialize() {
         Registry.register(Registry.BLOCK, PAIRED_CHEST_IDENTIFIER, PAIRED_CHEST_BLOCK)

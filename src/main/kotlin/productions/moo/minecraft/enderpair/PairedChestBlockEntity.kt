@@ -2,9 +2,12 @@ package productions.moo.minecraft.enderpair
 
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.ChestBlockEntity
+import net.minecraft.inventory.Inventory
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
+import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
 
 class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
@@ -19,7 +22,7 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
         return TranslatableText(cachedState.block.translationKey)
     }
 
-    override fun readNbt(nbt: NbtCompound?) {
+    override fun readNbt(nbt: NbtCompound) {
         super.readNbt(nbt)
 
         if (world != null) {
@@ -34,9 +37,14 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
             println("!!!!!!!!!! UNKONWN READ NBT DATA !!!!!!!!!!")
             println(nbt.toString())
         }
+
+        if(nbt.contains(EnderPair.PAIRED_CHEST)) {
+            (cachedState.block as PairedChestBlock).uuid = nbt.getUuid(EnderPair.PAIRED_CHEST)!!
+        }
+
     }
 
-    override fun writeNbt(nbt: NbtCompound?): NbtCompound {
+    override fun writeNbt(nbt: NbtCompound): NbtCompound {
         val ret = super.writeNbt(nbt)
 
         if (world != null) {
@@ -52,6 +60,13 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
             println(nbt.toString())
         }
 
+        val uuid = (cachedState.block as PairedChestBlock).uuid
+        ret.putUuid(EnderPair.PAIRED_CHEST, uuid)
+
         return ret
+    }
+
+    fun setInventory(inventory: DefaultedList<ItemStack>) {
+        this.invStackList = inventory
     }
 }
