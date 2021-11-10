@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.BlockState
 import net.minecraft.block.ChestBlock
 import net.minecraft.block.enums.ChestType
-import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.item.ItemStack
@@ -24,10 +23,18 @@ class PairedChestBlock(settings: FabricBlockSettings) : ChestBlock(settings, { E
     }
 
     companion object {
-        val inventoryMap = HashMap<UUID, DefaultedList<ItemStack>>()
-    }
+        private val inventoryMap = HashMap<UUID, DefaultedList<ItemStack>>()
 
-    var uuid: UUID = UUID.randomUUID()
+        fun getOrCreateInventory(uuid: UUID): DefaultedList<ItemStack> {
+            return if (inventoryMap.containsKey(uuid)) {
+                inventoryMap[uuid]!!
+            } else {
+                val inventory = DefaultedList.ofSize(EnderPair.INVENTORY_SIZE, ItemStack.EMPTY)
+                inventoryMap[uuid] = inventory
+                inventory
+            }
+        }
+    }
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
         return super.getPlacementState(ctx)!!
@@ -38,18 +45,6 @@ class PairedChestBlock(settings: FabricBlockSettings) : ChestBlock(settings, { E
         return PairedChestBlockEntity(blockPos, blockState)
     }
 
-    override fun onPlaced(world: World, pos: BlockPos, state: BlockState, placer: LivingEntity?, itemStack: ItemStack) {
-        println("OOOOOOOOOOOOOOOOOOOON PLACEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
-        uuid = itemStack.orCreateNbt.getUuid(EnderPair.PAIRED_CHEST)
-        inventoryMap[uuid] = DefaultedList.ofSize(EnderPair.INVENTORY_SIZE, ItemStack.EMPTY)
-        if (itemStack.hasCustomName()) {
-            val blockEntity = world.getBlockEntity(pos)
-            if (blockEntity is PairedChestBlockEntity) {
-                blockEntity.customName = itemStack.name
-            }
-        }
-    }
-
     override fun onUse(
         state: BlockState,
         world: World,
@@ -58,11 +53,10 @@ class PairedChestBlock(settings: FabricBlockSettings) : ChestBlock(settings, { E
         hand: Hand,
         hit: BlockHitResult
     ): ActionResult {
-        val inventory = inventoryMap[uuid]
         val blockEntity = world.getBlockEntity(pos)
-        if(inventory != null && blockEntity is PairedChestBlockEntity) {
-            val chestEntity = blockEntity as PairedChestBlockEntity
-            chestEntity.setInventory(inventory)
+        if (blockEntity is PairedChestBlockEntity) {
+            val inventory = getOrCreateInventory(blockEntity.uuid)
+            blockEntity.setInventory(inventory)
         }
         return super.onUse(state, world, pos, player, hand, hit)
     }

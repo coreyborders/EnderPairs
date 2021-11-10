@@ -21,6 +21,7 @@ class EnderPairClient : ClientModInitializer {
                 context
             )
         }
+
         ClientSpriteRegistryCallback.event(TexturedRenderLayers.CHEST_ATLAS_TEXTURE).register { _, registry ->
             registry.register(PairedChestBlockEntityRenderer.PAIRED_CHEST_TEXTURE)
         }

@@ -19,22 +19,22 @@ object EnderPair : ModInitializer {
 
     const val MOD_ID = "ender_pair"
     const val PAIRED_CHEST = "paired_chest"
+    private val PAIRED_CHEST_IDENTIFIER: Identifier = Identifier(MOD_ID, PAIRED_CHEST)
+
     val PAIRED_CHEST_BLOCK = PairedChestBlock(FabricBlockSettings.copyOf(Blocks.ENDER_CHEST))
     val PAIRED_CHEST_ITEM = PairedChestItem()
     val PAIRED_CHEST_TYPE = FabricBlockEntityTypeBuilder.create(
         { blockPos, blockState -> PairedChestBlockEntity(blockPos, blockState) },
         PAIRED_CHEST_BLOCK
-    ).build(null)
+    ).build(null)!!
     lateinit var PAIRED_CHEST_SCREEN_HANDLER: ScreenHandlerType<GenericContainerScreenHandler>
-
-    val PAIRED_CHEST_IDENTIFIER: Identifier = Identifier(MOD_ID, PAIRED_CHEST)
 
     override fun onInitialize() {
         Registry.register(Registry.BLOCK, PAIRED_CHEST_IDENTIFIER, PAIRED_CHEST_BLOCK)
         Registry.register(Registry.ITEM, PAIRED_CHEST_IDENTIFIER, PAIRED_CHEST_ITEM)
         Registry.register(Registry.BLOCK_ENTITY_TYPE, PAIRED_CHEST_IDENTIFIER, PAIRED_CHEST_TYPE)
         PAIRED_CHEST_SCREEN_HANDLER =
-            ScreenHandlerRegistry.registerSimple(EnderPair.PAIRED_CHEST_IDENTIFIER) { syncId: Int, playerInventory: PlayerInventory ->
+            ScreenHandlerRegistry.registerSimple(PAIRED_CHEST_IDENTIFIER) { syncId: Int, playerInventory: PlayerInventory ->
                 GenericContainerScreenHandler(
                     ScreenHandlerType.GENERIC_9X3,
                     syncId,
