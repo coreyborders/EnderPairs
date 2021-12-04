@@ -64,6 +64,23 @@ class PairedChestBlock(settings: FabricBlockSettings) : ChestBlock(settings, { E
         return super.onUse(state, world, pos, player, hand, hit)
     }
 
+    override fun onStateReplaced(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        newState: BlockState,
+        moved: Boolean
+    ) {
+        if (!state.isOf(newState.block)) {
+            val blockEntity = world.getBlockEntity(pos)
+            if (blockEntity is PairedChestBlockEntity) {
+                world.removeBlockEntity(pos)
+            } else {
+                super.onStateReplaced(state, world, pos, newState, moved)
+            }
+        }
+    }
+
     override fun afterBreak(
         world: World,
         player: PlayerEntity,
