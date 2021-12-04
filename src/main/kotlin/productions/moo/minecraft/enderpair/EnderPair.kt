@@ -4,7 +4,9 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry
+import net.fabricmc.fabric.impl.resource.loader.FabricModResourcePack
 import net.minecraft.block.Blocks
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.screen.GenericContainerScreenHandler
@@ -19,7 +21,7 @@ object EnderPair : ModInitializer {
 
     const val MOD_ID = "ender_pair"
     const val PAIRED_CHEST = "paired_chest"
-    private val PAIRED_CHEST_IDENTIFIER: Identifier = Identifier(MOD_ID, PAIRED_CHEST)
+    val PAIRED_CHEST_IDENTIFIER: Identifier = Identifier(MOD_ID, PAIRED_CHEST)
 
     val PAIRED_CHEST_BLOCK = PairedChestBlock(FabricBlockSettings.copyOf(Blocks.ENDER_CHEST))
     val PAIRED_CHEST_ITEM = PairedChestItem()

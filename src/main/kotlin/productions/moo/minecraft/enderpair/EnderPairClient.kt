@@ -12,7 +12,7 @@ import net.minecraft.text.Text
 
 class EnderPairClient : ClientModInitializer {
     override fun onInitializeClient() {
-        ScreenRegistry.register(EnderPair.PAIRED_CHEST_SCREEN_HANDLER) { handler: GenericContainerScreenHandler, playerInventory: PlayerInventory, title: Text ->
+        ScreenRegistry.register(EnderPair.PAIRED_CHEST_SCREEN_HANDLER) { handler: GenericContainerScreenHandler, playerInventory: PlayerInventory?, title: Text ->
             GenericContainerScreen(handler, playerInventory, title)
         }
 
