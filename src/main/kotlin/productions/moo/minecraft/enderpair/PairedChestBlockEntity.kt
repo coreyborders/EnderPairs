@@ -27,9 +27,9 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    override fun writeNbt(nbt: NbtCompound): NbtCompound {
+    override fun writeNbt(nbt: NbtCompound) {
+        super.writeNbt(nbt)
         nbt.putUuid(EnderPair.PAIRED_CHEST, uuid)
-        return super.writeNbt(nbt)
     }
 
     fun setInventory(inventory: DefaultedList<ItemStack>) {
