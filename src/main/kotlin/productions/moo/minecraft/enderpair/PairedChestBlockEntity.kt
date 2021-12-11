@@ -2,11 +2,10 @@ package productions.moo.minecraft.enderpair
 
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.ChestBlockEntity
-import net.minecraft.item.ItemStack
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.text.Text
 import net.minecraft.text.TranslatableText
-import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
 import java.util.*
 
@@ -14,6 +13,7 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
     ChestBlockEntity(EnderPair.PAIRED_CHEST_TYPE, pos, state) {
 
     var uuid: UUID = UUID.randomUUID()
+    private var inventory: PairedChestInventory? = null
 
     override fun getDisplayName(): Text {
         return TranslatableText(cachedState.block.translationKey)
@@ -32,7 +32,15 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
         nbt.putUuid(EnderPair.PAIRED_CHEST, uuid)
     }
 
-    fun setInventory(inventory: DefaultedList<ItemStack>) {
-        this.invStackList = inventory
+    fun setInventory(inventory: PairedChestInventory) {
+        this.inventory = inventory
+        this.invStackList = inventory.items
+    }
+
+    override fun onClose(player: PlayerEntity?) {
+        // TODO(Casey): I don't think we need this but we'll have to test that.
+        inventory!!.items = this.invStackList
+        inventory!!.markDirty()
+        super.onClose(player)
     }
 }
