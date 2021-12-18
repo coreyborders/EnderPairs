@@ -2,6 +2,6 @@
   "parent": "ender_pair:block/chest_template",
   "textures": {
     "0": "ender_pair:block/paired_chest",
-    "particle": "block/obsidian"
+    "particle": "ender_pair:block/paired_chest_particle"
   }
 }
