@@ -38,8 +38,6 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun onClose(player: PlayerEntity?) {
-        // TODO(Casey): I don't think we need this but we'll have to test that.
-        inventory!!.items = this.invStackList
         inventory!!.markDirty()
         super.onClose(player)
     }
