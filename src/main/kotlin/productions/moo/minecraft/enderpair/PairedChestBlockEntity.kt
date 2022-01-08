@@ -23,7 +23,7 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
         this.stateManager = object:ViewerCountManager() {
             override fun onContainerOpen(world: World, pos: BlockPos, state: BlockState?) {
                 val coin = world.random.nextBoolean()
-                playSound(world, pos, if (coin){SoundEvents.BLOCK_GRINDSTONE_USE} else {SoundEvents.BLOCK_CHEST_OPEN})
+                playSound(world, pos, SoundEvents.ENTITY_ILLUSIONER_CAST_SPELL)
             }
 
             override fun onContainerClose(world: World, pos: BlockPos, state: BlockState?) {
@@ -59,8 +59,8 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
             pos.z.toDouble(),
             soundEvent,
             SoundCategory.BLOCKS,
-            0.5f,
-            1.0f
+            0.3f,
+            0.6f
         )
     }
 
