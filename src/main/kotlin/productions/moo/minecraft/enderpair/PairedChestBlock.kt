@@ -81,6 +81,9 @@ class PairedChestBlock(settings: FabricBlockSettings) : ChestBlock(settings, { E
             chestNbtCompound.putString("id", EnderPair.PAIRED_CHEST_IDENTIFIER.toString())
             val chestStack = ItemStack.fromNbt(chestNbtCompound)
             chestStack.orCreateNbt.putUuid(EnderPair.PAIRED_CHEST, blockEntity.uuid)
+            if (blockEntity.hasCustomName()) {
+                chestStack.setCustomName(blockEntity.customName)
+            }
             val droppedChest = DefaultedList.of<ItemStack>()
             droppedChest.add(chestStack)
 
