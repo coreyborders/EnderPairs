@@ -28,6 +28,9 @@ class PairedChestItem : BlockItem(EnderPair.PAIRED_CHEST_BLOCK, FabricItemSettin
             val entity = world.getBlockEntity(pos)
             if (entity is PairedChestBlockEntity) {
                 entity.uuid = stack.orCreateNbt!!.getUuid(EnderPair.PAIRED_CHEST)!!
+                if (stack.hasCustomName()) {
+                    entity.customName = stack.name
+                }
             }
         }
         return result

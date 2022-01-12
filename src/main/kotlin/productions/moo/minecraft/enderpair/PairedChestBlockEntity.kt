@@ -20,7 +20,7 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
     private val stateManager: ViewerCountManager
 
     init {
-        this.stateManager = object:ViewerCountManager() {
+        this.stateManager = object : ViewerCountManager() {
             override fun onContainerOpen(world: World, pos: BlockPos, state: BlockState?) {
                 val coin = world.random.nextBoolean()
                 playSound(world, pos, SoundEvents.ENTITY_ILLUSIONER_CAST_SPELL)
@@ -69,7 +69,11 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
     private var inventory: PairedChestInventory? = null
 
     override fun getDisplayName(): Text {
-        return TranslatableText(cachedState.block.translationKey)
+        return if (hasCustomName()) {
+            customName!!
+        } else {
+            TranslatableText(cachedState.block.translationKey)
+        }
     }
 
     override fun readNbt(nbt: NbtCompound) {
