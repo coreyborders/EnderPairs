@@ -6,6 +6,7 @@ import net.minecraft.block.entity.ViewerCountManager
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.screen.GenericContainerScreenHandler
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
@@ -62,6 +63,12 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
             0.3f,
             0.6f
         )
+    }
+
+    override fun serializeLootTable(nbt: NbtCompound?): Boolean {
+        val inventory = PairedChestInventoryManager.getOrCreateInventory(world as ServerWorld, uuid)
+        setInventory(inventory)
+        return super.serializeLootTable(nbt)
     }
 
 
