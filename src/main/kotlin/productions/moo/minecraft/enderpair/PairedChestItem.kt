@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import java.util.*
@@ -31,6 +32,8 @@ class PairedChestItem : BlockItem(EnderPair.PAIRED_CHEST_BLOCK, FabricItemSettin
                 if (stack.hasCustomName()) {
                     entity.customName = stack.name
                 }
+                val inventory = PairedChestInventoryManager.getOrCreateInventory(world as ServerWorld, entity.uuid)
+                entity.setInventory(inventory)
             }
         }
         return result
