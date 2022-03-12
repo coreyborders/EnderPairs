@@ -4,11 +4,14 @@ import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.BlockState
 import net.minecraft.block.ChestBlock
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.block.entity.BlockEntityTicker
+import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.block.enums.ChestType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
+import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.property.Properties
 import net.minecraft.util.ActionResult
@@ -91,5 +94,21 @@ class PairedChestBlock(settings: FabricBlockSettings) : ChestBlock(settings, { E
         } else {
             super.afterBreak(world, player, pos, state, blockEntity, stack)
         }
+    }
+
+    override fun <T : BlockEntity?> getTicker(
+        world: World,
+        state: BlockState,
+        type: BlockEntityType<T>
+    ): BlockEntityTicker<T>? {
+        return if (world.isClient) {
+            null
+        } else checkType(type, EnderPair.PAIRED_CHEST_TYPE) { world: World, pos: BlockPos, state: BlockState, blockEntity: PairedChestBlockEntity ->
+            blockEntity.serverTick()
+        }
+    }
+
+    override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int {
+        return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos))
     }
 }

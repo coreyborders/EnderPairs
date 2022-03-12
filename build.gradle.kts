@@ -1,4 +1,4 @@
-plugins {
+        plugins {
     id("fabric-loom")
     val kotlinVersion: String by System.getProperties()
     kotlin("jvm").version(kotlinVersion)
@@ -11,7 +11,7 @@ val modVersion: String by project
 version = modVersion
 val mavenGroup: String by project
 group = mavenGroup
-minecraft {}
+
 repositories {}
 dependencies {
     val minecraftVersion: String by project

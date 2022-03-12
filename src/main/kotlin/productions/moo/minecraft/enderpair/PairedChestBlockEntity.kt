@@ -4,6 +4,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.entity.ChestBlockEntity
 import net.minecraft.block.entity.ViewerCountManager
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.screen.GenericContainerScreenHandler
 import net.minecraft.server.world.ServerWorld
@@ -23,7 +24,6 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
     init {
         this.stateManager = object : ViewerCountManager() {
             override fun onContainerOpen(world: World, pos: BlockPos, state: BlockState?) {
-                val coin = world.random.nextBoolean()
                 playSound(world, pos, SoundEvents.ENTITY_ILLUSIONER_CAST_SPELL)
             }
 
@@ -118,5 +118,17 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
         if (!removed) {
             this.stateManager.updateViewerCount(getWorld(), getPos(), cachedState)
         }
+    }
+
+    fun serverTick() {
+        markDirty()
+    }
+
+    override fun size(): Int {
+        return inventory?.items?.size?: 0
+    }
+
+    override fun getStack(slot: Int): ItemStack {
+        return inventory?.items?.get(slot)?: ItemStack.EMPTY
     }
 }

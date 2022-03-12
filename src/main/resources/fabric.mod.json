@@ -27,14 +27,11 @@
       "productions.moo.minecraft.enderpair.EnderPairClient"
     ]
   },
-  "mixins": [
-    "ender_pair.mixins.json"
-  ],
   "depends": {
-    "fabricloader": ">=0.12",
+    "fabricloader": ">=0.13",
     "fabric": "*",
-    "fabric-language-kotlin": ">=1.7.0+kotlin.1.6.0",
-    "minecraft": "1.18.1",
+    "fabric-language-kotlin": ">=1.7.1+kotlin.1.6.10",
+    "minecraft": "1.18.2",
     "java": ">=17"
   }
 }
