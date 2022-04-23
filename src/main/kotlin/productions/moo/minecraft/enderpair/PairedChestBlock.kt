@@ -102,7 +102,7 @@ class PairedChestBlock(settings: FabricBlockSettings) : ChestBlock(settings, { E
         type: BlockEntityType<T>
     ): BlockEntityTicker<T>? {
         return if (world.isClient) {
-            null
+            super.getTicker(world, state, type)
         } else checkType(type, EnderPair.PAIRED_CHEST_TYPE) { world: World, pos: BlockPos, state: BlockState, blockEntity: PairedChestBlockEntity ->
             blockEntity.serverTick()
         }
