@@ -9,7 +9,6 @@ import net.minecraft.block.Blocks
 import net.minecraft.block.ChestBlock
 import net.minecraft.block.DoubleBlockProperties
 import net.minecraft.block.entity.ChestBlockEntity
-import net.minecraft.client.block.ChestAnimationProgress
 import net.minecraft.client.model.ModelPart
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.TexturedRenderLayers
@@ -69,7 +68,7 @@ class PairedChestBlockEntityRenderer(context: BlockEntityRendererFactory.Context
 
             val properties = chest.getBlockEntitySource(blockState, world, entity.pos, true)
             val animationProgress =
-                (properties.apply(ChestBlock.getAnimationProgressRetriever(entity as ChestAnimationProgress)) as Float2FloatFunction).get(
+                (properties.apply(ChestBlock.getAnimationProgressRetriever(entity)) as Float2FloatFunction).get(
                     tickDelta
                 )
 

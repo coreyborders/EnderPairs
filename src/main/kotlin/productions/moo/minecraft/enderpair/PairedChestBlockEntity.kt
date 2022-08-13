@@ -12,7 +12,6 @@ import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.Text
-import net.minecraft.text.TranslatableText
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import java.util.*
@@ -79,7 +78,7 @@ class PairedChestBlockEntity(pos: BlockPos, state: BlockState) :
         return if (hasCustomName()) {
             customName!!
         } else {
-            TranslatableText(cachedState.block.translationKey)
+            Text.translatable(cachedState.block.translationKey)
         }
     }
 
